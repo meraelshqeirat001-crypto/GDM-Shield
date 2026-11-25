@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#168b83">
+  <meta name="description" content="GDM Shield - تطبيق لمتابعة قراءات سكر الحمل والوجبات والنشاط والتقارير الصحية.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <title>GDM Shield | درع سكري الحمل</title>
+</head>
+<body>
+  <header class="topbar">
+    <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">☰</button>
+    <a class="brand" href="#dashboard"><span class="brand-mark">♥</span><span><b>GDM Shield</b><small>درع سكري الحمل</small></span></a>
+    <div class="top-actions">
+      <button class="icon-btn" id="langToggle" title="Change language">EN</button>
+      <span class="privacy-pill">🔒 <span data-i18n="localOnly">بياناتك على جهازك</span></span>
+    </div>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="profile-card">
+      <div class="avatar">♥</div>
+      <div><b data-i18n="welcome">أهلاً بكِ</b><small data-i18n="profileSub">رحلتك الصحية تبدأ هنا</small></div>
+    </div>
+    <nav class="nav-list" aria-label="Main navigation">
+      <a href="#dashboard" data-page="dashboard"><span>⌂</span><span data-i18n="dashboard">لوحة التحكم</span></a>
+      <a href="#glucose" data-page="glucose"><span>◉</span><span data-i18n="glucose">قراءات السكر</span></a>
+      <a href="#meals" data-page="meals"><span>♧</span><span data-i18n="meals">الوجبات</span></a>
+      <a href="#activity" data-page="activity"><span>♡</span><span data-i18n="activity">النشاط البدني</span></a>
+      <a href="#reminders" data-page="reminders"><span>◷</span><span data-i18n="reminders">التذكيرات</span></a>
+      <a href="#reports" data-page="reports"><span>▤</span><span data-i18n="reports">التقارير</span></a>
+      <a href="#settings" data-page="settings"><span>⚙</span><span data-i18n="settings">الإعدادات والنسخ الاحتياطي</span></a>
+    </nav>
+    <div class="sidebar-note"><b data-i18n="careNoteTitle">تذكير مهم</b><p data-i18n="careNote">التطبيق أداة تنظيم ومتابعة، ولا يغني عن تعليمات الطبيب أو الممرضة.</p></div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <main class="main" id="main">
+    <section class="page active" id="page-dashboard">
+      <div class="page-heading"><div><p class="eyebrow" data-i18n="overview">نظرة عامة</p><h1 data-i18n="dashboard">لوحة التحكم</h1><p data-i18n="dashIntro">تابعي قراءاتكِ وعاداتكِ اليومية من مكان واحد.</p></div><div class="date-chip" id="todayLabel"></div></div>
+      <div class="welcome-banner"><div><span class="banner-kicker" data-i18n="dailyCare">رعاية يومية أكثر سهولة</span><h2 data-i18n="bannerTitle">خطوة صغيرة كل يوم تصنع فرقاً</h2><p data-i18n="bannerText">سجّلي قراءاتكِ، نظّمي وجباتكِ، وشاركي ملخصكِ مع فريق الرعاية.</p></div><div class="banner-art">♥</div></div>
+      <div class="stats-grid">
+        <article class="stat-card"><span data-i18n="latestReading">آخر قراءة</span><strong id="latestValue">—</strong><small id="latestMeta">mg/dL</small></article>
+        <article class="stat-card"><span data-i18n="todayReadings">قراءات اليوم</span><strong id="todayCount">0</strong><small data-i18n="savedEntries">قراءة مسجلة</small></article>
+        <article class="stat-card"><span data-i18n="inRange">ضمن الهدف</span><strong id="inRangeRate">—</strong><small data-i18n="basedOnLogged">من القراءات المسجلة</small></article>
+        <article class="stat-card"><span data-i18n="activityToday">نشاط اليوم</span><strong id="activityToday">0</strong><small data-i18n="minutes">دقيقة</small></article>
+      </div>
+      <div class="content-grid">
+        <article class="panel"><div class="panel-head"><div><h3 data-i18n="recentReadings">أحدث القراءات</h3><p data-i18n="recentSub">آخر خمس قراءات مسجلة</p></div><a href="#glucose" class="text-link" data-i18n="viewAll">عرض الكل ←</a></div><div id="recentList" class="list-stack empty-state">لا توجد قراءات بعد.</div></article>
+        <article class="panel"><div class="panel-head"><div><h3 data-i18n="quickActions">إجراءات سريعة</h3><p data-i18n="quickSub">اختاري ما تريدين تسجيله</p></div></div><div class="quick-actions"><a href="#glucose" class="quick-action"><span>＋</span><b data-i18n="addGlucose">إضافة قراءة سكر</b></a><a href="#meals" class="quick-action"><span>♧</span><b data-i18n="addMeal">تسجيل وجبة</b></a><a href="#activity" class="quick-action"><span>♡</span><b data-i18n="logActivity">تسجيل نشاط</b></a></div></article>
+      </div>
+      <p class="disclaimer" data-i18n="disclaimer">هذه الأداة للتنظيم والتثقيف فقط. لا تشخّص الحالة ولا تغيّر العلاج. اتبعي الأهداف والخطة التي يحددها فريقكِ الطبي.</p>
+    </section>
+
+    <section class="page" id="page-glucose">
+      <div class="page-heading"><div><p class="eyebrow" data-i18n="monitoring">المتابعة اليومية</p><h1 data-i18n="glucose">قراءات السكر</h1><p data-i18n="glucoseIntro">سجّلي القراءة مع توقيتها لمتابعة النمط بمرور الوقت.</p></div></div>
+      <div class="content-grid two-col">
+        <article class="panel"><h3 data-i18n="newReading">إضافة قراءة جديدة</h3>
+          <form id="glucoseForm" class="form-grid">
+            <label><span data-i18n="readingValue">قيمة السكر (mg/dL)</span><input type="number" id="glucoseValue" min="20" max="600" required placeholder="مثال: 92"></label>
+            <label><span data-i18n="readingType">نوع القراءة</span><select id="glucoseType"><option value="fasting">صائم</option><option value="after1">بعد الأكل بساعة</option><option value="after2">بعد الأكل بساعتين</option><option value="other">أخرى</option></select></label>
+            <label><span data-i18n="readingDate">التاريخ والوقت</span><input type="datetime-local" id="glucoseDate" required></label>
+            <label><span data-i18n="notes">ملاحظات (اختياري)</span><input id="glucoseNotes" maxlength="180" placeholder="..."></label>
+            <button class="btn primary full" type="submit" data-i18n="saveReading">حفظ القراءة</button>
+          </form>
+          <div class="target-info"><b data-i18n="referenceTargets">أهداف مرجعية شائعة</b><p>Fasting &lt; 95 · 1h &lt; 140 · 2h &lt; 120 mg/dL</p><small data-i18n="targetWarning">قد تختلف الأهداف حسب حالتكِ وتعليمات الطبيب. عدّليها من الإعدادات.</small></div>
+        </article>
+        <article class="panel"><div class="panel-head"><div><h3 data-i18n="readingHistory">سجل القراءات</h3><p data-i18n="historySub">يمكنكِ حذف أي سجل عند الحاجة</p></div><button class="btn light small" id="clearGlucose" data-i18n="clear">مسح السجل</button></div><div id="glucoseList" class="list-stack empty-state">لا توجد قراءات مسجلة.</div></article>
+      </div>
+      <div id="glucoseAlert" class="alert-box hidden" role="status"></div>
+    </section>
+
+    <section class="page" id="page-meals">
+      <div class="page-heading"><div><p class="eyebrow" data-i18n="nutrition">التغذية</p><h1 data-i18n="meals">الوجبات</h1><p data-i18n="mealsIntro">نظّمي الوجبات والوجبات الخفيفة وفق خطتكِ الغذائية.</p></div></div>
+      <div class="content-grid two-col">
+        <article class="panel"><h3 data-i18n="logMeal">تسجيل وجبة</h3><form id="mealForm" class="form-grid">
+          <label><span data-i18n="mealType">نوع الوجبة</span><select id="mealType"><option>الإفطار</option><option>وجبة خفيفة صباحية</option><option>الغداء</option><option>وجبة خفيفة مسائية</option><option>العشاء</option><option>قبل النوم</option></select></label>
+          <label><span data-i18n="mealTime">الوقت</span><input type="time" id="mealTime" required></label>
+          <label class="span-2"><span data-i18n="mealDetails">ماذا تناولتِ؟</span><textarea id="mealDetails" rows="3" maxlength="300" required placeholder="اكتبي مكونات الوجبة..."></textarea></label>
+          <label><span data-i18n="mealNotes">ملاحظات / قراءة مرتبطة</span><input id="mealNotes" maxlength="160" placeholder="اختياري"></label>
+          <button class="btn primary full" type="submit" data-i18n="saveMeal">حفظ الوجبة</button>
+        </form></article>
+        <article class="panel"><h3 data-i18n="balancedPlate">مبادئ عامة للوجبة المتوازنة</h3><div class="plate-visual"><div class="plate-half"><span data-i18n="nonStarchy">خضراوات غير نشوية</span></div><div class="plate-quarter"><span data-i18n="protein">بروتين</span></div><div class="plate-quarter2"><span data-i18n="carbs">كربوهيدرات غنية بالألياف</span></div></div><ul class="tips"><li data-i18n="mealTip1">اختاري كميات وتوزيع الكربوهيدرات حسب أخصائية التغذية.</li><li data-i18n="mealTip2">اجمعي الكربوهيدرات مع البروتين والألياف.</li><li data-i18n="mealTip3">لا تتخطي الوجبات دون استشارة الفريق الطبي.</li></ul></article>
+      </div>
+      <article class="panel section-panel"><div class="panel-head"><div><h3 data-i18n="mealHistory">سجل الوجبات</h3><p data-i18n="mealHistorySub">الوجبات التي سجلتِها مؤخراً</p></div></div><div id="mealList" class="list-stack empty-state">لا توجد وجبات مسجلة.</div></article>
+      <p class="disclaimer" data-i18n="nutritionDisclaimer">الأمثلة إرشادية عامة وليست خطة غذائية شخصية. اتبعي الخطة التي يحددها الطبيب أو أخصائي التغذية للحمل.</p>
+    </section>
+
+    <section class="page" id="page-activity">
+      <div class="page-heading"><div><p class="eyebrow" data-i18n="movement">الحركة والصحة</p><h1 data-i18n="activity">النشاط البدني</h1><p data-i18n="activityIntro">سجّلي نشاطكِ اليومي وفق ما يسمح به فريق الرعاية.</p></div></div>
+      <div class="content-grid two-col">
+        <article class="panel"><h3 data-i18n="logActivity">تسجيل نشاط</h3><form id="activityForm" class="form-grid">
+          <label><span data-i18n="activityType">نوع النشاط</span><select id="activityType"><option>المشي</option><option>تمارين حمل خفيفة موصى بها</option><option>نشاط آخر</option></select></label>
+          <label><span data-i18n="duration">المدة (دقيقة)</span><input type="number" id="activityDuration" min="1" max="300" required placeholder="20"></label>
+          <label><span data-i18n="activityDate">التاريخ</span><input type="date" id="activityDate" required></label>
+          <label><span data-i18n="activityNotes">ملاحظات (اختياري)</span><input id="activityNotes" maxlength="160"></label>
+          <button class="btn primary full" type="submit" data-i18n="saveActivity">حفظ النشاط</button>
+        </form></article>
+        <article class="panel"><h3 data-i18n="safeMovement">تنبيهات السلامة</h3><div class="safety-list"><p>✓ <span data-i18n="safe1">استشيري طبيبكِ قبل بدء أو تعديل النشاط.</span></p><p>✓ <span data-i18n="safe2">اختاري نشاطاً معتدلاً يناسب حملكِ وتوجيهات الفريق الطبي.</span></p><p>✓ <span data-i18n="safe3">توقفي واطلبي المشورة عند الدوار أو الألم أو ضيق النفس أو أي عرض مقلق.</span></p><p>✓ <span data-i18n="safe4">لا تمارسي نشاطاً يخالف القيود الطبية الخاصة بحملكِ.</span></p></div></article>
+      </div>
+      <article class="panel section-panel"><h3 data-i18n="activityHistory">سجل النشاط</h3><div id="activityList" class="list-stack empty-state">لا يوجد نشاط مسجل.</div></article>
+    </section>
+
+    <section class="page" id="page-reminders">
+      <div class="page-heading"><div><p class="eyebrow" data-i18n="stayOnTrack">تنظيم اليوم</p><h1 data-i18n="reminders">التذكيرات</h1><p data-i18n="remindersIntro">أضيفي تذكيرات القياس والوجبات والأدوية الموصوفة.</p></div></div>
+      <div class="content-grid two-col">
+        <article class="panel"><h3 data-i18n="newReminder">إضافة تذكير</h3><form id="reminderForm" class="form-grid">
+          <label><span data-i18n="reminderTitle">عنوان التذكير</span><input id="reminderTitle" required maxlength="80" placeholder="مثال: قياس السكر الصائم"></label>
+          <label><span data-i18n="reminderTime">الوقت</span><input type="time" id="reminderTime" required></label>
+          <label><span data-i18n="reminderCategory">التصنيف</span><select id="reminderCategory"><option>قياس السكر</option><option>وجبة</option><option>دواء / إنسولين موصوف</option><option>موعد طبي</option><option>أخرى</option></select></label>
+          <button class="btn primary full" type="submit" data-i18n="saveReminder">حفظ التذكير</button>
+        </form><button class="btn light full permission-btn" id="enableNotifications" data-i18n="enableNotifications">تفعيل إشعارات المتصفح</button><small class="muted" data-i18n="notificationNote">تعتمد الإشعارات على دعم المتصفح وإذن الجهاز، وقد لا تعمل عند إغلاق التطبيق.</small></article>
+        <article class="panel"><h3 data-i18n="reminderList">قائمة التذكيرات</h3><div id="reminderList" class="list-stack empty-state">لا توجد تذكيرات.</div></article>
+      </div>
+    </section>
+
+    <section class="page" id="page-reports">
+      <div class="page-heading"><div><p class="eyebrow" data-i18n="clinicalSummary">ملخص صحي</p><h1 data-i18n="reports">التقارير</h1><p data-i18n="reportsIntro">جهّزي ملخصاً منظماً لمشاركته مع الممرضة أو الطبيب.</p></div></div>
+      <article class="panel report-panel"><div class="report-head"><div><span class="report-logo">♥</span><div><h2>GDM Shield</h2><p data-i18n="reportSubtitle">ملخص متابعة سكري الحمل</p></div></div><span class="date-chip" id="reportDate"></span></div>
+        <div class="report-stats"><div><small data-i18n="totalReadings">إجمالي القراءات</small><b id="reportTotal">0</b></div><div><small data-i18n="inTarget">ضمن الهدف</small><b id="reportInTarget">0%</b></div><div><small data-i18n="highReadings">قراءات أعلى من الهدف</small><b id="reportHigh">0</b></div><div><small data-i18n="lowReadings">قراءات أقل من 70</small><b id="reportLow">0</b></div></div>
+        <h3 data-i18n="reportReadings">ملخص القراءات</h3><div id="reportBreakdown" class="report-breakdown"></div>
+        <div class="report-note"><b data-i18n="reportNoteTitle">ملاحظة</b><p data-i18n="reportNote">هذا الملخص مبني على البيانات التي أدخلتها المستخدمة، ولا يمثل تشخيصاً أو توصية علاجية.</p></div>
+        <div class="report-actions"><button class="btn primary" id="printReport" data-i18n="printPdf">طباعة / حفظ PDF</button><button class="btn light" id="shareReport" data-i18n="shareReport">مشاركة الملخص</button></div>
+      </article>
+    </section>
+
+    <section class="page" id="page-settings">
+      <div class="page-heading"><div><p class="eyebrow" data-i18n="personalize">التحكم والخصوصية</p><h1 data-i18n="settings">الإعدادات والنسخ الاحتياطي</h1><p data-i18n="settingsIntro">إدارة الأهداف والبيانات دون حساب أو كلمة مرور.</p></div></div>
+      <div class="content-grid two-col">
+        <article class="panel"><h3 data-i18n="profileSettings">بيانات المتابعة</h3><form id="settingsForm" class="form-grid">
+          <label><span data-i18n="displayName">الاسم (اختياري)</span><input id="userName" maxlength="50"></label>
+          <label><span data-i18n="pregnancyWeek">أسبوع الحمل</span><input id="pregnancyWeek" type="number" min="1" max="45" placeholder="مثال: 28"></label>
+          <label><span data-i18n="fastingTarget">هدف الصائم (أقل من)</span><input id="targetFasting" type="number" min="50" max="200" required></label>
+          <label><span data-i18n="oneHourTarget">هدف بعد ساعة (أقل من)</span><input id="targetAfter1" type="number" min="50" max="250" required></label>
+          <label><span data-i18n="twoHourTarget">هدف بعد ساعتين (أقل من)</span><input id="targetAfter2" type="number" min="50" max="250" required></label>
+          <button class="btn primary full" type="submit" data-i18n="saveSettings">حفظ الإعدادات</button>
+        </form></article>
+        <article class="panel"><h3 data-i18n="backup">النسخ الاحتياطي</h3><p class="muted" data-i18n="backupText">بياناتكِ محفوظة محلياً في هذا المتصفح. نزّلي نسخة احتياطية بانتظام، واحتفظي بها في مكان آمن.</p>
+          <button class="btn primary full" id="exportData" data-i18n="exportBackup">تنزيل نسخة احتياطية JSON</button>
+          <label class="file-label"><span data-i18n="importBackup">استعادة نسخة احتياطية</span><input type="file" id="importFile" accept=".json,application/json"></label>
+          <button class="btn danger full" id="deleteAll" data-i18n="deleteAll">حذف جميع البيانات من هذا الجهاز</button>
+          <div class="privacy-note">🔐 <span data-i18n="privacyText">لا يوجد تسجيل دخول أو خادم. لا تشاركي النسخة الاحتياطية إلا مع جهة موثوقة.</span></div>
+        </article>
+      </div>
+    </section>
+  </main>
+  <footer class="mobile-footer"><span>GDM Shield</span><span data-i18n="footerText">متابعة واعية لحمل أكثر اطمئناناً</span></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+    }
+  </script>
+</body>
+</html>

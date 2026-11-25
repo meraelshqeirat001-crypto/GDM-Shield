@@ -1,0 +1,19 @@
+{
+  "name": "GDM Shield - درع سكري الحمل",
+  "short_name": "GDM Shield",
+  "description": "Gestational diabetes self-monitoring companion",
+  "start_url": "./index.html#dashboard",
+  "display": "standalone",
+  "background_color": "#f6f9fa",
+  "theme_color": "#168b83",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
